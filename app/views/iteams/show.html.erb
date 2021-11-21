@@ -1,0 +1,72 @@
+<div class="iteams_form_info">
+<p>
+  <strong>Title:</strong>
+  <%= @iteam.title %>
+</p>
+
+<p>
+  <strong>Text:</strong>
+  <%= @iteam.text %>
+</p>
+
+<p>
+ <strong>Status:</strong>
+ <%= @iteam.status %>
+</p>
+
+</div>
+
+<div class="table-container">
+    <%= form_tag update_iteam_iteams_path, :method =>'put' do %>
+    <table class="table table-striped table-dark">
+    <thead>
+        <tr>
+        <th scope="col">#</th>
+        <th scope="col">Title</th>
+        <th scope="col">Text</th>
+        <th scope="col">Status</th>
+        <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <% @iteam.taskers.each do |task| %>
+        <tr>
+        <th scope="row"><%= task.id %></th>
+        <td><%= task.task %></td>
+        <td><%= task.body %></td>
+        <td>
+        <%= task.status %>
+        <%= check_box_tag "id[]", task.id %>
+        </td>
+        <td>   
+        </td>
+
+          </tr>
+        <% end %>
+    </tbody>
+    </table>
+    <%= submit_tag "Edit Checked" %>  
+</div>
+ <% end %>  
+
+<div class="iteams_form_info">
+  <h2>Add a iteam:</h2>
+  <%= form_with(model: [ @iteam, @iteam.taskers.build ], local: true) do |form| %>
+    <p>
+      <%= form.label :task %><br>
+      <%= form.text_field :task %>
+    </p>
+    <p>
+      <%= form.label :body %><br>
+      <%= form.text_area :body %>
+    </p>
+    <p>
+      <%= form.label :status %><br>
+      <%= form.select :status, [['Please select an option', nil], 'Done', 'Progress'] %>
+    </p>
+    <p>
+      <%= form.submit %>
+    </p>
+  <% end %>
+</div>
